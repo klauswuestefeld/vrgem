@@ -1,2 +1,2 @@
-# vrgen
+# vrgem
 Musings in virtual reality
