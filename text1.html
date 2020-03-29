@@ -3,6 +3,7 @@
     <title>Text</title>
     <meta name="description" content="Text - A-Frame">
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="dist/aframe-look-at-component.js"></script>
   </head>
   <body>
     <a-scene background="color: #222">
@@ -15,7 +16,7 @@
       </a-assets>
 
  
-      <a-camera position="0 0 -3">
+      <a-camera id="look-cam" position="0 0 -3">
         <a-cursor>
         </a-cursor>
       </a-camera>
@@ -34,13 +35,16 @@
       >
     </a-text>
     <a-entity mixin="marker" position="0 0 -4.99"></a-entity>
-    
+
       <a-entity
           line="start: 0, -0.15, -5; end: 0 -0.85 -5; color: red"
           line__2="start: -2, 4, 5; end: 0 4 -3; color: green"
       ></a-entity>
 
       <a-text value="HW"
+
+      look-at="#look-cam"
+
       geometry="primitive: plane; height: 0.3; width: auto"
       material="color: green" 
       position="0 -1 -5"
