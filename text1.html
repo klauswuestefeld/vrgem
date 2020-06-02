@@ -10,35 +10,60 @@
       <a-assets>
         <a-mixin
           id="marker"
-          geometry="primitive: plane; width: 0.02; height: 0.02"
+          geometry="primitive: plane; width: 0.01; height: 0.01"
           material="color: red"
         ></a-mixin>
       </a-assets>
 
  
-      <a-camera id="look-cam" position="0 0 -3">
+      <a-camera id="look-cam" position="0 0 0">
         <a-cursor>
         </a-cursor>
       </a-camera>
 
       
-      <a-text value="Hello, World!!"
-      geometry="primitive: plane; height: 0.3; width: auto"
-      material="color: green"
-      
-      position="0 0 -5"
+      <a-text value="Hello, World Up"
+        position="0 1.25 -0.50"
+
+        geometry="primitive: plane; height: 0.03; width: auto"
+        material="color: black"
+        
+        width="0.50"
+        wrap-count="40"
+        align="center"
+        baseline="center"
+        >
+      </a-text>      
+    <a-text value="Hello, World!!"
+      position="0 1.20 -0.45"
+
+      geometry="primitive: plane; height: 0.03; width: auto"
+      material="color: black"
+    
+      width="0.50"
+      wrap-count="60"
       align="center"
       baseline="center"
-      
-      animation__mouseenter="property: color; to: #ddd; dur: 2000; startEvents: mouseenter"
-      animation__mouseleave="property: color; to: #f22; dur: 2000; startEvents: mouseleave"
       >
     </a-text>
-    <a-entity mixin="marker" position="0 0 -4.99"></a-entity>
+
+    <a-text value="Hello, World Down"
+    position="0 1.15 -0.40"
+
+    geometry="primitive: plane; height: 0.03; width: auto"
+    material="color: black"
+    
+    width="0.50"
+    wrap-count="80"
+    align="center"
+    baseline="center"
+    >
+    </a-text>
+
+
 
       <a-entity
           line="start: 0, -0.15, -5; end: 0 -0.85 -5; color: red"
-          line__2="start: -2, 4, 5; end: 0 4 -3; color: green"
       ></a-entity>
 
       <a-text value="HW"
@@ -53,6 +78,13 @@
     </a-text>
     <a-entity mixin="marker" position="0 -1 -4.99"></a-entity>      
 
+    <!--
+    <a-box position="-1 0.5 -5" rotation="0 45 0" color="#4CC3D9"
+      animation__mouseenter="property: position; to: 0 -1 -3; dur: 300; startEvents: mouseenter"
+      animation__mouseleave="property: position; to: 0 -1 -5; dur: 300; startEvents: mouseleave">
+
+    </a-box>
+  -->
 
     </a-scene>
   </body>
