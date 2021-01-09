@@ -2,11 +2,81 @@
   <head>
     <title>Text</title>
     <meta name="description" content="Text - A-Frame">
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
     <script src="dist/aframe-look-at-component.js"></script>
+    <!-- <script src="src/components/oculus-touch-controls.js"></script> -->
   </head>
   <body>
-    <a-scene background="color: #222">
+
+    <script>
+        /**
+         * Change color if entity when intersected by raycaster.
+         */
+         AFRAME.registerComponent('intersect-color-change', {
+          init: function () {
+            var el = this.el;
+            var material = el.getAttribute('material');
+            var initialColor = material.color;
+            var self = this;
+
+            el.addEventListener('mouseenter', function () {
+              el.setAttribute('material', 'color', '#24CAFF');
+              self.isMouseEnter = true;
+            });
+
+            el.addEventListener('mouseleave', function () {
+              el.setAttribute('material', 'color', initialColor);
+              self.isMouseEnter = false;
+            });
+
+            el.addEventListener('mousedown', function (evt) {
+              el.setAttribute('material', 'color', '#EF2D5E');
+            });
+
+            el.addEventListener('mouseup', function (evt) {
+              el.setAttribute('material', 'color', self.isMouseEnter ? '#24CAFF' : initialColor);
+            });
+
+          }
+        });
+
+        AFRAME.registerComponent('controlador-de-mao',{
+          init: function () {
+            this.el.addEventListener('thumbstickmoved', this.logThumbstick);
+            this.el.addEventListener('gripdown', this.logGarra);
+          },
+          logThumbstick: function (evt) {
+            if (evt.detail.y >  0.45) { nossoConsole.setAttribute('value', 'DOWN' ); }
+            if (evt.detail.y < -0.45) { nossoConsole.setAttribute('value', 'UP\nUP'   ); }
+            if (evt.detail.x < -0.45) { nossoConsole.setAttribute('value', 'LEFT' ); }
+            if (evt.detail.x >  0.45) { nossoConsole.setAttribute('value', 'RIGHT'); }
+          },
+
+          logGarra: function (evt) {
+            nossoConsole.setAttribute('value', 'garra' );
+          }
+        });
+    </script>
+
+
+<a-scene background="color: #222">
+
+
+      <!--
+        <a-entity id="leftHand"  hand-controls="hand: left;  handModelStyle: lowPoly; color: #ffcccc"></a-entity>
+        <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
+
+      <a-entity id="leftHand"  laser-controls="hand: left" raycaster="objects: [mixin='box']"></a-entity>
+      <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: [mixin='box']" line="color: #118A7E"></a-entity>
+
+      -->
+
+      <!-- <a-entity id="leftHand"  laser-controls="hand: left" raycaster=""></a-entity> -->
+      <!-- <a-entity id="rightHand" laser-controls="hand: right" raycaster="" line="color: #118A7E"></a-entity> -->
+  
+      <a-entity oculus-touch-controls="hand: left"></a-entity>
+      <a-entity oculus-touch-controls="hand: right" controlador-de-mao></a-entity>
+
       <a-assets>
         <a-mixin
           id="marker"
@@ -16,17 +86,21 @@
       </a-assets>
 
  
-      <a-camera id="look-cam" position="0 0 0">
+      <a-camera id="look-cam" position="0 0 4">
         <a-cursor>
         </a-cursor>
       </a-camera>
 
       
-      <a-text value="Hello, World Up"
-        position="0 1.25 -0.50"
 
+      
+      <a-text value="Hello, World Up 1.1.0"
+      
+        position="0 1.25 -0.50"
+      
         geometry="primitive: plane; height: 0.03; width: auto"
         material="color: black"
+        intersect-color-change
         
         width="0.50"
         wrap-count="40"
@@ -87,5 +161,68 @@
   -->
 
     </a-scene>
+
+    <script>
+
+      var scene = document.querySelector('a-scene');
+
+      if (scene.hasLoaded) {
+        run();
+      } else {
+        scene.addEventListener('loaded', run);
+      }
+
+      function run () {
+        // var entity = document.createElement('a-entity');
+        
+        // entity.setAttribute('geometry', {
+        //   primitive: 'box',
+        //   height: 3,
+        //   width: 1
+        // });
+        // entity.setAttribute('material', 'opacity', '0.6');
+
+
+        // entity.setAttribute('material', 'color', 'red');
+
+        // scene.appendChild(entity);
+
+
+
+
+
+        var entity = document.createElement('a-text');
+        
+        entity.setAttribute('value', 'Console');
+        entity.setAttribute('position', '0 1 -1');
+    
+        entity.setAttribute('geometry', 'primitive', 'plane');
+        entity.setAttribute('geometry', 'height', '0.5');
+        entity.setAttribute('geometry', 'width', 'auto');
+
+        entity.setAttribute('material', 'color', 'black');
+        entity.setAttribute('material', 'opacity', '0.6');
+        entity.setAttribute('material', 'dithering', 'false');
+        
+        
+        entity.setAttribute('width', '1'); // Text size
+        entity.setAttribute('wrap-count', '80');
+        entity.setAttribute('align', 'center');
+        entity.setAttribute('baseline', 'center');
+
+        scene.appendChild(entity);
+
+        nossoConsole = entity;
+
+
+
+
+
+
+      }
+    </script>
+
+
+
   </body>
 </html>
